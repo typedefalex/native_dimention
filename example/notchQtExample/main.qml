@@ -7,165 +7,89 @@ import QtQuick.Controls.Material 2.3
 import com.yas.NativeDimention 1.0
 
 ApplicationWindow {
+	id: window
 	visible: true
-	width: 640
-	height: 480
-	title: qsTr("Hello World")
-	flags: Qt.platform.os === "ios" ? Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint : Qt.Window
+	width: 360
+	height: 640
+	title: qsTr("NativeDimention")
+	flags: Qt.platform.os === "ios" ? Qt.MaximizeUsingFullscreenGeometryHint : Qt.Window
 
 	header: ToolBar {
-		Material.accent: "red"
-		Material.background: "red"
-		Material.foreground: "red"
-		Material.primary: "red"
-
-		leftPadding: NativeDimention.insetLeft
-
 		height: NativeDimention.statusBarHeight + 56
 
 		Rectangle {
-			color: "red"
+			color: Material.color(Material.Pink)
 			width: parent.width
 			height: NativeDimention.statusBarHeight
 		}
 
-
-
 		RowLayout {
 			anchors.fill: parent
+			anchors.leftMargin: NativeDimention.insetLeft
+			anchors.rightMargin: NativeDimention.insetRight
 			anchors.topMargin: NativeDimention.statusBarHeight
-			ToolButton {
-				text: qsTr("‹")
-				onClicked: stack.pop()
-			}
+
+			ToolButton { icon.name: "drawer" }
+			Label { text: "Title"; elide: Label.ElideRight; horizontalAlignment: Qt.AlignHCenter; verticalAlignment: Qt.AlignVCenter; Layout.fillWidth: true }
+			ToolButton { icon.name: "menu" }
+		}
+	}
+
+	SwipeView {
+		id: swipeView
+		anchors.fill: parent
+		currentIndex: tabBar.currentIndex
+
+		Page {
 			Label {
-				text: "Title"
-				elide: Label.ElideRight
-				horizontalAlignment: Qt.AlignHCenter
-				verticalAlignment: Qt.AlignVCenter
-				Layout.fillWidth: true
+				text: "statusBarHeight: " + NativeDimention.statusBarHeight + "\ninsetBottom: " + NativeDimention.insetBottom + "\ninsetLeft: "
+					  + NativeDimention.insetLeft + "\ninsetRight: " + NativeDimention.insetRight + "\ninsetTop: " + NativeDimention.insetTop
+				anchors.centerIn: parent
 			}
-			ToolButton {
-				text: qsTr("⋮")
-				onClicked: menu.open()
+		}
+
+		Page {
+			ListView {
+				id: list
+				anchors.fill: parent
+				model: model
+				delegate: ItemDelegate {
+					id: control
+					leftPadding: NativeDimention.insetLeft + 16
+					width: list.width
+					text: name
+
+					Rectangle{ anchors.fill: parent; color: model.color }
+				}
+			}
+
+			ListModel {
+				id: model
+
+				ListElement { name: "Bill Smith"; color: "red" }
+				ListElement { name: "John Brown"; color: "green" }
+				ListElement { name: "Sam Wise"; color: "blue" }
+				ListElement { name: "Bill Smith"; color: "red" }
+				ListElement { name: "John Brown"; color: "green" }
+				ListElement { name: "Sam Wise"; color: "blue" }
+				ListElement { name: "Bill Smith"; color: "red" }
+				ListElement { name: "John Brown"; color: "green" }
+				ListElement { name: "Sam Wise"; color: "blue" }
+				ListElement { name: "Bill Smith"; color: "red" }
+				ListElement { name: "John Brown"; color: "green" }
+				ListElement { name: "Sam Wise"; color: "blue" }
 			}
 		}
 	}
 
-	ListView {
-		id: list
-		 anchors.fill: parent
+	footer: TabBar {
+		id: tabBar
+		currentIndex: swipeView.currentIndex
+		leftPadding: NativeDimention.insetLeft
+		rightPadding: NativeDimention.insetRight
+		bottomPadding: NativeDimention.insetBottom
 
-		 model: model
-		 delegate: ItemDelegate {
-			 id: control
-			 leftPadding: NativeDimention.insetLeft
-			 width: list.width
-
-
-			 text: name
-
-			 Rectangle{
-				 anchors.fill: parent
-				 color: model.color
-			 }
-		 }
-	 }
-
-
-	ListModel {
-		id: model
-
-			ListElement {
-				name: "Bill Smith"
-				color: "red"
-			}
-			ListElement {
-				name: "John Brown"
-				color: "green"
-			}
-			ListElement {
-				name: "Sam Wise"
-				color: "blue"
-			}
-
-			ListElement {
-				name: "Bill Smith"
-				color: "red"
-			}
-			ListElement {
-				name: "John Brown"
-				color: "green"
-			}
-			ListElement {
-				name: "Sam Wise"
-				color: "blue"
-			}
-			ListElement {
-				name: "Bill Smith"
-				color: "red"
-			}
-			ListElement {
-				name: "John Brown"
-				color: "green"
-			}
-			ListElement {
-				name: "Sam Wise"
-				color: "blue"
-			}
-			ListElement {
-				name: "Bill Smith"
-				color: "red"
-			}
-			ListElement {
-				name: "John Brown"
-				color: "green"
-			}
-			ListElement {
-				name: "Sam Wise"
-				color: "blue"
-			}
-			ListElement {
-				name: "Bill Smith"
-				color: "red"
-			}
-			ListElement {
-				name: "John Brown"
-				color: "green"
-			}
-			ListElement {
-				name: "Sam Wise"
-				color: "blue"
-			}
-			ListElement {
-				name: "Bill Smith"
-				color: "red"
-			}
-			ListElement {
-				name: "John Brown"
-				color: "green"
-			}
-			ListElement {
-				name: "Sam Wise"
-				color: "blue"
-			}
-			ListElement {
-				name: "Bill Smith"
-				color: "red"
-			}
-			ListElement {
-				name: "John Brown"
-				color: "green"
-			}
-			ListElement {
-				name: "Sam Wise"
-				color: "blue"
-			}
-
-	}
-
-	Text{
-		anchors.fill: parent
-		text: NativeDimention.statusBarHeight + " " + NativeDimention.insetBottom + " " + NativeDimention.insetLeft + " " + NativeDimention.insetRight + " " + NativeDimention.insetTop
+		TabButton { icon.name: "menu"; text: qsTr("Page 1") }
+		TabButton { icon.name: "drawer"; text: qsTr("Page 2") }
 	}
 }
