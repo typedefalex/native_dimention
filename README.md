@@ -11,7 +11,15 @@ Usage
 - git clone https://github.com/typedefalex/native_dimention.git
 
 - add to main .pro file 
-`include(../../src/nativedimension.pri)`
+  `include(../../src/nativedimension.pri)`
+- Use `NativeDimention::init(&engine)` after `QGuiApplication()` instance and before `QQmlApplicationEngine::load()` function.
+  
+  `QGuiApplication app(argc, argv);
+	QQmlApplicationEngine engine;
+  ...
+  NativeDimention::init(&engine);
+  ...
+	engine.load(QUrl(QStringLiteral("qrc:/main.qml")));`
 
 Screenshots
 -----------
