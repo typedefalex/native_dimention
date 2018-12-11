@@ -1,7 +1,7 @@
 Introduction
 ------------
 
-Simple api to getting insets for ios(notch) and for android(cutout).
+Simple api for getting insets for ios(notch) and android(cutout).
 
 Usage
 ---------------
