@@ -22,6 +22,8 @@ NativeDimention* NativeDimention::instance()
 	return instance_;
 }
 
+#include <QWindow>
+
 void NativeDimention::init(QQmlApplicationEngine* engine)
 {
 	if (instance_ != nullptr)
@@ -44,9 +46,13 @@ void NativeDimention::init(QQmlApplicationEngine* engine)
 
 	QObject::connect(engine, &QQmlApplicationEngine::objectCreated, [](QObject* object, const QUrl& url)
 	{
-		Q_UNUSED(object)
 		Q_UNUSED(url)
 
+#ifdef Q_OS_IOS
+		qobject_cast<QWindow*>(object)->setFlag(Qt::MaximizeUsingFullscreenGeometryHint);
+#else
+		Q_UNUSED(object)
+#endif
 		instance_->loaded();
 	});
 }
