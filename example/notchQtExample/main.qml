@@ -12,7 +12,6 @@ ApplicationWindow {
 	width: 360
 	height: 640
 	title: qsTr("NativeDimention")
-	flags: Qt.platform.os === "ios" ? Qt.MaximizeUsingFullscreenGeometryHint : Qt.Window
 
 	header: ToolBar {
 		height: NativeDimention.statusBarHeight + 56
