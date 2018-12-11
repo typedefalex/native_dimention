@@ -1,5 +1,3 @@
-# native_dimention
-
 Introduction
 ------------
 
