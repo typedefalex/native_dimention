@@ -58,18 +58,33 @@ void NativeDimentionPrivate::loaded()
 					callObjectMethod("getRootWindowInsets", "()Landroid/view/WindowInsets;").
 					callObjectMethod("getDisplayCutout", "()Landroid/view/DisplayCutout;");
 
+//			other way
+//			displayCutout = QtAndroid::androidActivity().callObjectMethod("getWindow", "()Landroid/view/Window;")
+//						.callObjectMethod("getDecorView", "()Landroid/view/View;")
+//						.callObjectMethod("getRootWindowInsets", "()Landroid/view/WindowInsets;")
+//						.callObjectMethod("getDisplayCutout", "()Landroid/view/DisplayCutout;");
 
-			jfloat inset = static_cast<jfloat>(displayCutout.callMethod<jint>("getSafeInsetBottom"))/density;
-			q->setInsetBottom(static_cast<double>(inset));
+			if (displayCutout.isValid())
+			{
+				jfloat inset = static_cast<jfloat>(displayCutout.callMethod<jint>("getSafeInsetBottom"))/density;
+				q->setInsetBottom(static_cast<double>(inset));
 
-			inset = static_cast<jfloat>(displayCutout.callMethod<jint>("getSafeInsetLeft"))/density;
-			q->setInsetLeft(static_cast<double>(inset));
+				inset = static_cast<jfloat>(displayCutout.callMethod<jint>("getSafeInsetLeft"))/density;
+				q->setInsetLeft(static_cast<double>(inset));
 
-			inset = static_cast<jfloat>(displayCutout.callMethod<jint>("getSafeInsetRight"))/density;
-			q->setInsetRight(static_cast<double>(inset));
+				inset = static_cast<jfloat>(displayCutout.callMethod<jint>("getSafeInsetRight"))/density;
+				q->setInsetRight(static_cast<double>(inset));
 
-			inset = static_cast<jfloat>(displayCutout.callMethod<jint>("getSafeInsetTop"))/density;
-			q->setInsetTop(static_cast<double>(inset));
+				inset = static_cast<jfloat>(displayCutout.callMethod<jint>("getSafeInsetTop"))/density;
+				q->setInsetTop(static_cast<double>(inset));
+			}
+			else
+			{
+				q->setInsetBottom(0);
+				q->setInsetLeft(0);
+				q->setInsetRight(0);
+				q->setInsetTop(0);
+			}
 		}
 		else
 		{
