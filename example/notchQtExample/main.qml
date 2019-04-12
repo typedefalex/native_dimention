@@ -58,25 +58,32 @@ ApplicationWindow {
 					width: list.width
 					text: name
 
-					Rectangle{ anchors.fill: parent; color: model.color }
+                    Rectangle{
+                        anchors.fill: parent
+                        color: switch (index % 3) {
+                                   case 0: return Material.color(Material.Red);
+                                   case 1: return Material.color(Material.Green);
+                                   case 2: return Material.color(Material.Blue);
+                               }
+                    }
 				}
 			}
 
 			ListModel {
 				id: model
 
-				ListElement { name: "Bill Smith"; color: "red" }
-				ListElement { name: "John Brown"; color: "green" }
-				ListElement { name: "Sam Wise"; color: "blue" }
-				ListElement { name: "Bill Smith"; color: "red" }
-				ListElement { name: "John Brown"; color: "green" }
-				ListElement { name: "Sam Wise"; color: "blue" }
-				ListElement { name: "Bill Smith"; color: "red" }
-				ListElement { name: "John Brown"; color: "green" }
-				ListElement { name: "Sam Wise"; color: "blue" }
-				ListElement { name: "Bill Smith"; color: "red" }
-				ListElement { name: "John Brown"; color: "green" }
-				ListElement { name: "Sam Wise"; color: "blue" }
+                ListElement { name: "Bill Smith" }
+                ListElement { name: "John Brown"; }
+                ListElement { name: "Sam Wise"; }
+                ListElement { name: "Bill Smith"; }
+                ListElement { name: "John Brown"; }
+                ListElement { name: "Sam Wise"; }
+                ListElement { name: "Bill Smith"; }
+                ListElement { name: "John Brown"; }
+                ListElement { name: "Sam Wise"; }
+                ListElement { name: "Bill Smith"; }
+                ListElement { name: "John Brown"; }
+                ListElement { name: "Sam Wise"; }
 			}
 		}
 	}
